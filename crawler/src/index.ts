@@ -1,28 +1,50 @@
 import vavi from "vavi"
+import { CaptchaRequestPublisher } from "./CaptchaRequestPublisher";
 
-/**
- * TODO(developer): Uncomment these variables before running the sample.
- */
-const topicName = 'my-topic';
-const data = JSON.stringify({foo: 'bar'});
+import express from "express";
 
-// Imports the Google Cloud client library
-import {PubSub} from '@google-cloud/pubsub';
+let crawler: vavi.VaViCrawler;
 
-// Creates a client; cache this for further use
-const pubSubClient = new PubSub();
-
-async function publishMessage() {
-  // Publishes the message as a string, e.g. "Hello, world!" or JSON.stringify(someObject)
-  const dataBuffer = Buffer.from(data);
-
-  try {
-    const messageId = await pubSubClient.topic(topicName).publish(dataBuffer);
-    console.log(`Message ${messageId} published.`);
-  } catch (error) {
-    console.error(`Received error while publishing: ${error.message}`);
-    process.exitCode = 1;
+async function setup() {
+  const captchaRequestTopicName = process.env['PUBSUB_CAPTCHA_REQUEST_TOPIC_NAME'];
+  if(!captchaRequestTopicName) {
+    throw new Error('Env PUBSUB_CAPTCHA_REQUEST_TOPIC_NAME not set');
   }
+
+  const publisher = new CaptchaRequestPublisher(captchaRequestTopicName);
+  
+  const app = express();
+
+  app.post('/', (req, res) => {
+    if (!req.body) {
+      const msg = 'no Pub/Sub message received';
+      console.error(`error: ${msg}`);
+      res.status(400).send(`Bad Request: ${msg}`);
+      return;
+    }
+    if (!req.body.message || !req.body.message.data) {
+      const msg = 'invalid Pub/Sub message format';
+      console.error(`error: ${msg}`);
+      res.status(400).send(`Bad Request: ${msg}`);
+      return;
+    }
+  
+    const data =  Buffer.from(req.body.message.data, 'base64').toString();
+  
+    console.log(`${data}`);
+    res.status(204).send();
+  });
 }
 
-publishMessage();
+
+async function startCrawl(loginCardInfo: vavi.LoginCardInfo) {
+  crawler ||= await vavi.launch({headless: false});
+  let captcha = await crawler.getCardUsageStats(loginCardInfo);
+  captcha.captchaImage
+}
+
+const loginCardInfo: vavi.LoginCardInfo = {
+    inquiryNumber2 : '', inquiryNumber3 : '', inquiryNumber4 : '', securityCode : ''
+};
+
+setup();
