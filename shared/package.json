@@ -1,0 +1,19 @@
+{
+  "name": "vavi-viewer-shared",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/split-n/vavi-viewer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/split-n/vavi-viewer/issues"
+  },
+  "homepage": "https://github.com/split-n/vavi-viewer#readme"
+}
