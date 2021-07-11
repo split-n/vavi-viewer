@@ -2,7 +2,7 @@
   "name": "vavi-viewer-crawler",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,6 +23,7 @@
   "dependencies": {
     "@google-cloud/pubsub": "^2.15.1",
     "express": "^4.17.1",
-    "vavi": "file:../../vavi"
+    "vavi": "file:../../vavi",
+    "vavi-viewer-shared": "file:../shared"
   }
 }

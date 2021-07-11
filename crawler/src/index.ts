@@ -1,5 +1,6 @@
 import vavi from "vavi"
 import { CaptchaRequestPublisher } from "./CaptchaRequestPublisher";
+import {CrawlRequest} from "vavi-viewer-shared";
 
 import express from "express";
 
@@ -15,6 +16,8 @@ async function setup() {
   
   const app = express();
 
+  app.use(express.json());
+
   app.post('/', (req, res) => {
     if (!req.body) {
       const msg = 'no Pub/Sub message received';
@@ -22,17 +25,15 @@ async function setup() {
       res.status(400).send(`Bad Request: ${msg}`);
       return;
     }
-    if (!req.body.message || !req.body.message.data) {
-      const msg = 'invalid Pub/Sub message format';
-      console.error(`error: ${msg}`);
-      res.status(400).send(`Bad Request: ${msg}`);
-      return;
-    }
-  
-    const data =  Buffer.from(req.body.message.data, 'base64').toString();
-  
-    console.log(`${data}`);
+
+
+    console.log(`${req.body}`);
     res.status(204).send();
+  });
+
+  const port = process.env.PORT || 8080;
+  app.listen(port, () => {
+    console.log(`helloworld: listening on port ${port}`);
   });
 }
 
