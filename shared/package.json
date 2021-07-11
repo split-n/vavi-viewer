@@ -2,7 +2,7 @@
   "name": "vavi-viewer-shared",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/split-n/vavi-viewer/issues"
   },
-  "homepage": "https://github.com/split-n/vavi-viewer#readme"
+  "homepage": "https://github.com/split-n/vavi-viewer#readme",
+  "dependencies": {
+    "vavi": "file:../../vavi"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
 }
