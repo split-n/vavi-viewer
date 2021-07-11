@@ -7,17 +7,17 @@
         {
             "type": "pwa-node",
             "request": "launch",
-            "name": "Launch Program",
-            "preLaunchTask": "tsc: build - tsconfig.json",
+            "name": "Launch crawler",
+            "preLaunchTask": "tsc: build crawler",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/build/index.js",
+            "program": "${workspaceFolder}/crawler/build/index.js",
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
+                "${workspaceFolder}/crawler/**/*.js"
             ],
             "console": "integratedTerminal",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/crawler/.env"
         }
     ]
 }
