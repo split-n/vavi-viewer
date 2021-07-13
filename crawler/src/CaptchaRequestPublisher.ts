@@ -1,4 +1,5 @@
 import {PubSub} from '@google-cloud/pubsub';
+import { CaptchaRequest } from 'vavi-viewer-shared';
 
 export class CaptchaRequestPublisher {
     pubSubClient: PubSub;
@@ -8,7 +9,7 @@ export class CaptchaRequestPublisher {
         this.topicName = topicName;
     }
 
-    async publishMessage(data: any) {
+    async publishMessage(data: CaptchaRequest) {
         const dataBuffer = Buffer.from(JSON.stringify(data));
       
         try {
