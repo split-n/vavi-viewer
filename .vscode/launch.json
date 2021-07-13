@@ -5,6 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Cloud Run: Run/Debug Locally",
+            "type": "cloudcode.cloudrun",
+            "request": "launch",
+            "build": {
+                "docker": {
+                    "path": "Dockerfile.crawler"
+                }
+            },
+            "image": "vavi-viewer-crawler",
+            "service": {
+                "name": "vavi-viewer-crawler",
+                "containerPort": 8080,
+                "resources": {
+                    "limits": {
+                        "memory": "513Mi"
+                    }
+                }
+            },
+            "target": {
+                "minikube": {}
+            },
+            "watch": true
+        },
+        {
             "type": "pwa-node",
             "request": "launch",
             "name": "Launch crawler",

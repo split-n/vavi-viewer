@@ -1,0 +1,16 @@
+FROM node:16-slim
+
+WORKDIR /usr/src/app
+
+COPY shared/package*.json ./shared/
+COPY crawler/package*.json ./crawler/
+
+WORKDIR /usr/src/app/crawler
+RUN npm install --production
+
+WORKDIR /usr/src/app
+COPY shared/ ./
+COPY crawler/ ./ 
+
+WORKDIR /usr/src/app/crawler
+CMD ["node", "build/index.js"]
