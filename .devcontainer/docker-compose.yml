@@ -1,0 +1,21 @@
+dversion: '3.9'
+services:
+  crawler:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.crawler
+    ports: 
+      - '8080:8080'
+    command: 'sleep infinity'
+    environment:
+      - 'PUBSUB_EMULATOR_HOST=pubsub:8432'
+      - 'PUBSUB_PROJECT_ID=testprj'
+    volumes:
+      - '../..:/workspace'
+
+
+ .  pubsub:
+    image: gcr.io/google.com/cloudsdktool/cloud-sdk:348.0.0-emulators
+    command: 'gcloud beta emulators pubsub start --project=testprj'
+    environment: 
+      - PUBSUB_CAPTCHA_REQUEST_TOPIC_NAME=vaviewer_captcha_request
