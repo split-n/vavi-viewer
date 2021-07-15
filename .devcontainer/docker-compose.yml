@@ -1,4 +1,4 @@
-dversion: '3.9'
+version: '3.9'
 services:
   crawler:
     build:
@@ -10,12 +10,13 @@ services:
     environment:
       - 'PUBSUB_EMULATOR_HOST=pubsub:8432'
       - 'PUBSUB_PROJECT_ID=testprj'
+      - 'PUBSUB_CAPTCHA_REQUEST_TOPIC_NAME=vaviewer_captcha_request'
     volumes:
       - '../..:/workspace'
 
 
- .  pubsub:
-    image: gcr.io/google.com/cloudsdktool/cloud-sdk:348.0.0-emulators
+  pubsub:
+    build:
+      context: .
+      dockerfile: Dockerfile.emulator-pubsub
     command: 'gcloud beta emulators pubsub start --project=testprj'
-    environment: 
-      - PUBSUB_CAPTCHA_REQUEST_TOPIC_NAME=vaviewer_captcha_request

@@ -1,0 +1,14 @@
+FROM gcr.io/google.com/cloudsdktool/cloud-sdk:348.0.0-emulators
+# install python3 pubsub client for test https://cloud.google.com/pubsub/docs/emulator
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    python3-pip python3-setuptools g++ \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* \
+  && pip3 install --upgrade pip \
+  && python3 -m pip install --upgrade setuptools
+WORKDIR /
+RUN curl -L https://github.com/googleapis/python-pubsub/archive/refs/tags/v2.6.1.tar.gz | tar xzf - \
+  && mv python-pubsub-* python-pubsub
+WORKDIR /python-pubsub/samples/snippets
+RUN pip3 install -r requirements.txt
