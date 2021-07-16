@@ -8,6 +8,9 @@ node createTopic.js vaviewer_captcha_request
 node createSubscription.js vaviewer_crawl_request vaviewer_crawl_request_sub
 node createSubscription.js vaviewer_captcha_request vaviewer_captcha_request_sub
 
+node createPushSubscription_custom.js vaviewer_crawl_request vaviewer_captcha_request_pushsub 'http://crawler:8080/'
+
 # test
-# node publishMessage.js vaviewer_crawl_request '{"foo": "bar"}'
+# node publishMessage.js vaviewer_crawl_request '{"loginCardInfo": {"inquiryNumber2": "", "inquiryNumber3": "", "inquiryNumber4": "", "securityCode":""}}'
 # node synchronousPull_emulator.js testprj vaviewer_crawl_request_sub
+# node synchronousPull_emulator.js testprj vaviewer_captcha_request_sub

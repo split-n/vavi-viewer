@@ -10,5 +10,5 @@ RUN curl -L https://github.com/googleapis/nodejs-pubsub/archive/refs/tags/v2.16.
   && mv nodejs-pubsub-* nodejs-pubsub
 WORKDIR /nodejs-pubsub/samples
 RUN npm i
-ADD pubsub/synchronousPull_emulator.js /nodejs-pubsub/samples/
+ADD pubsub/synchronousPull_emulator.js pubsub/createPushSubscription_custom.js /nodejs-pubsub/samples/
 ADD pubsub/pubsub_setup.sh /root/
