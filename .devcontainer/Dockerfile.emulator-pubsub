@@ -1,14 +1,14 @@
 FROM gcr.io/google.com/cloudsdktool/cloud-sdk:348.0.0-emulators
-# install python3 pubsub client for test https://cloud.google.com/pubsub/docs/emulator
+# install nodejs pubsub client for test https://cloud.google.com/pubsub/docs/emulator
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-    python3-pip python3-setuptools g++ \
+    nodejs npm \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* \
-  && pip3 install --upgrade pip \
-  && python3 -m pip install --upgrade setuptools
+  && rm -rf /var/lib/apt/lists/*
 WORKDIR /
-RUN curl -L https://github.com/googleapis/python-pubsub/archive/refs/tags/v2.6.1.tar.gz | tar xzf - \
-  && mv python-pubsub-* python-pubsub
-WORKDIR /python-pubsub/samples/snippets
-RUN pip3 install -r requirements.txt
+RUN curl -L https://github.com/googleapis/nodejs-pubsub/archive/refs/tags/v2.16.0.tar.gz | tar xzf - \
+  && mv nodejs-pubsub-* nodejs-pubsub
+WORKDIR /nodejs-pubsub/samples
+RUN npm i
+ADD pubsub/synchronousPull_emulator.js /nodejs-pubsub/samples/
+ADD pubsub/pubsub_setup.sh /root/
