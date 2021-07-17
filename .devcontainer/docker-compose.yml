@@ -4,11 +4,14 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile.crawler
+    cap_add:
+      - SYS_ADMIN
     ports: 
       - '8080:8080'
     command: 'sleep infinity'
+    init: true
     environment:
-      - 'PUBSUB_EMULATOR_HOST=pubsub:8432'
+      - 'PUBSUB_EMULATOR_HOST=pubsub:8085'
       - 'PUBSUB_PROJECT_ID=testprj'
       - 'PUBSUB_CAPTCHA_REQUEST_TOPIC_NAME=vaviewer_captcha_request'
     volumes:
@@ -19,4 +22,4 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.emulator-pubsub
-    command: 'gcloud beta emulators pubsub start --project=testprj'
+    command: 'gcloud beta emulators pubsub start --project=testprj --host-port=0.0.0.0:8085'

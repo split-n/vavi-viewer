@@ -11,7 +11,11 @@
 	"settings": {},
 	
 	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": []
+	"extensions": [],
+
+	"postCreateCommand": "sudo chown -R pptruser /workspace",
+
+	"remoteUser": "pptruser"
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
