@@ -8,7 +8,6 @@ RUN apt-get update \
 WORKDIR /
 RUN curl -L https://github.com/googleapis/nodejs-pubsub/archive/refs/tags/v2.16.0.tar.gz | tar xzf - \
   && mv nodejs-pubsub-* nodejs-pubsub
-WORKDIR /nodejs-pubsub/samples
+WORKDIR /nodejs-pubsub/samples/custom
 RUN npm i
-ADD pubsub/synchronousPull_emulator.js pubsub/createPushSubscription_custom.js /nodejs-pubsub/samples/
-ADD pubsub/pubsub_setup.sh /root/
+ADD pubsub/synchronousPull_emulator.js pubsub/prepareAll.js pubsub/pubsub_setup.sh /nodejs-pubsub/samples/custom/
