@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import express from "express";
 import { CaptchaInputSubscriber } from "./CaptchaInputSubscriber";
 
-let crawler: vavi.VaViCrawler;
+let browser: vavi.VaViCrawlerBrowser;
 
 const topic_captchaSolveRequest = 'vaviewer_captcha_solve_request'
 const topic_captchaSolved = 'vaviewer_captcha_solved';
@@ -58,7 +58,10 @@ app.listen(port, () => {
 
 
 async function startCrawl(loginCardInfo: vavi.LoginCardInfo) {
-  crawler ||= await vavi.launch({executablePath: 'google-chrome-stable'});
+  console.log('startCrawl:');
+  console.log(loginCardInfo);
+  browser ||= await vavi.VaViCrawlerBrowser.start({executablePath: 'google-chrome-stable'});
+  const crawler = await browser.newCrawler();
   let captchaOrResult: vavi.CaptchaInterruption | vavi.CardUsageStats;
   
   captchaOrResult = await crawler.getCardUsageStats(loginCardInfo);
@@ -69,6 +72,8 @@ async function startCrawl(loginCardInfo: vavi.LoginCardInfo) {
       cr.imageDataUrl = captchaOrResult.captchaImage;
       cr.uuid = uuidv4();
       captchaSolveRequestPublisher.publishMessage(cr);
+      console.log(`send captcha solve request for ${loginCardInfo.inquiryNumber4}`);
+      console.log(cr);
 
       let input: CaptchaInput;
       while(true) {
@@ -80,6 +85,7 @@ async function startCrawl(loginCardInfo: vavi.LoginCardInfo) {
       }
     } else {
       console.log(captchaOrResult);
+      crawler.dispose();
       return;
     }
   }

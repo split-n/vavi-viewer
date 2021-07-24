@@ -30,6 +30,7 @@ export class CaptchaInputSubscriber {
                     const data = JSON.parse(json) as CaptchaInput;
                     if (uuid === data.uuid) {
                         message.ack();
+                        console.log(`ack captcha: ${uuid}`)
                         this.subscription.removeListener('message', listenerFunc);
                         resolve(data);
                     }
@@ -39,7 +40,7 @@ export class CaptchaInputSubscriber {
             }
             setTimeout(() => {
                 this.subscription.removeListener('message', listenerFunc);
-                reject('timeout');
+                reject(new Error(`Timeout on waitForImputMessage, uuid=${uuid}`));
             }, timeout)
             this.subscription.addListener('message', listenerFunc);
         });
