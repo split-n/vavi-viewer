@@ -16,7 +16,7 @@ async function setup() {
 
     await pubSubClient.createSubscription('vaviewer_crawl_request', 'vaviewer_crawl_request_sub');
     await pubSubClient.createSubscription('vaviewer_crawl_request_dead', 'vaviewer_crawl_request_dead_sub');
-    await pubSubClient.createSubscription('vaviewer_captcha_solve_request', 'vvaviewer_captcha_solve_sub');
+    await pubSubClient.createSubscription('vaviewer_captcha_solve_request', 'vaviewer_captcha_solve_request_sub');
     await pubSubClient.createSubscription('vaviewer_captcha_solved', 'vaviewer_captcha_solved_sub', {
         ackDeadlineSeconds: 5
     });
